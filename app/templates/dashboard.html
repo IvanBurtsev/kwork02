@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Панель{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>📊 Панель управления</h1>
+  <span class="text-muted small">{{ user.username|e }}</span>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-3">
+    <div class="card p-3 text-center">
+      <div class="text-muted small">Всего токенов</div>
+      <div class="fs-4 fw-semibold">{{ "{:,}".format(total_tokens) }}</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card p-3 text-center">
+      <div class="text-muted small">Потрачено</div>
+      <div class="fs-4 fw-semibold">${{ "%.4f"|format(total_cost) }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span>🔑 API-ключи</span>
+    <form action="/dashboard/key/create" method="post" class="d-flex gap-2">
+      <input type="text" name="name" class="form-control form-control-sm" placeholder="Название ключа" style="width:160px">
+      <button type="submit" class="btn btn-primary btn-sm">+ Создать</button>
+    </form>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr><th>Название</th><th>Ключ</th><th>Использовано</th><th>Лимит</th><th>Статус</th><th></th></tr>
+        </thead>
+        <tbody>
+          {% for k in keys %}
+          <tr>
+            <td>{{ k.name|e }}</td>
+            <td><code class="small">{{ k.key[:16] }}...</code></td>
+            <td>{{ "{:,}".format(k.tokens_used) }}</td>
+            <td>{{ "{:,}".format(k.tokens_limit) }}</td>
+            <td>{% if k.is_active %}<span class="badge badge-status status-success">Активен</span>{% else %}<span class="badge badge-status status-error">Неактивен</span>{% endif %}</td>
+            <td class="text-end">
+              <form action="/dashboard/key/{{ k.id }}/toggle" method="post" style="display:inline">
+                <button type="submit" class="btn btn-sm btn-outline-secondary">{% if k.is_active %}Выкл{% else %}Вкл{% endif %}</button>
+              </form>
+              <form action="/dashboard/key/{{ k.id }}/delete" method="post" style="display:inline" onsubmit="return confirm('Удалить ключ?')">
+                <button type="submit" class="btn btn-sm btn-outline-danger">🗑</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="6" class="text-center text-muted py-3">Нет ключей.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span>📋 Последние запросы</span>
+    <a href="/dashboard/logs.csv" class="btn btn-outline-primary btn-sm">📥 CSV</a>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr><th>Модель</th><th>Токены</th><th>Стоимость</th><th>Статус</th><th>Дата</th></tr>
+        </thead>
+        <tbody>
+          {% for log in logs %}
+          <tr>
+            <td><code class="small">{{ log.model }}</code></td>
+            <td>{{ log.total_tokens }}</td>
+            <td>${{ "%.6f"|format(log.cost) }}</td>
+            <td>{% if log.status == 'success' %}<span class="badge badge-status status-success">OK</span>{% else %}<span class="badge badge-status status-error">{{ log.status }}</span>{% endif %}</td>
+            <td class="text-muted small text-nowrap">{{ log.created_at.strftime('%H:%M %d.%m') }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="5" class="text-center text-muted py-3">Нет запросов.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

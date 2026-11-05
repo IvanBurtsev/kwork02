@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}API Proxy{% endblock %}</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+<link href="/static/bootstrap.min.css" rel="stylesheet">
+<link href="/static/style.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top py-2">
+  <div class="container">
+    <a class="navbar-brand" href="/">🤖 API Proxy</a>
+    <div class="d-flex gap-2">
+      <a href="/" class="nav-link">Главная</a>
+      <a href="/docs" class="nav-link">Документация</a>
+      <a href="/dashboard" class="nav-link">Панель</a>
+      <a href="/admin" class="nav-link">Админ</a>
+      <a href="/logout" class="nav-link text-danger">Выйти</a>
+    </div>
+  </div>
+</nav>
+<main class="container py-4">
+{% block content %}{% endblock %}
+</main>
+<footer>
+  <div class="container">API Proxy &mdash; портфолио-проект. Поддерживает DeepSeek и OpenAI.</div>
+</footer>
+<script src="/static/bootstrap.bundle.min.js"></script>
+</body>
+</html>

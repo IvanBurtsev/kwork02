@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Админ{% endblock %}
+{% block content %}
+<h1>⚙️ Админ-панель</h1>
+
+<div class="row g-3 mb-4">
+  <div class="col-4">
+    <div class="card p-3 text-center">
+      <div class="text-muted small">Пользователи</div>
+      <div class="fs-4 fw-semibold">{{ users|length }}</div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card p-3 text-center">
+      <div class="text-muted small">Всего запросов</div>
+      <div class="fs-4 fw-semibold">{{ total_requests }}</div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card p-3 text-center">
+      <div class="text-muted small">Всего токенов</div>
+      <div class="fs-4 fw-semibold">{{ "{:,}".format(total_tokens) }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header">👥 Пользователи</div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr><th>ID</th><th>Имя</th><th>Админ</th><th>Активен</th><th>Ключей</th><th></th></tr>
+        </thead>
+        <tbody>
+          {% for u in users %}
+          <tr>
+            <td>{{ u.id }}</td>
+            <td>{{ u.username|e }}</td>
+            <td>{% if u.is_admin %}✅{% endif %}</td>
+            <td>{% if u.is_active %}<span class="badge badge-status status-success">Активен</span>{% else %}<span class="badge badge-status status-error">Блок</span>{% endif %}</td>
+            <td>{{ u.api_keys|length }}</td>
+            <td>
+              <form action="/admin/user/{{ u.id }}/toggle" method="post" style="display:inline">
+                <button type="submit" class="btn btn-sm btn-outline-secondary">{% if u.is_active %}Заблокировать{% else %}Разблокировать{% endif %}</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">🔑 Все ключи</div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr><th>ID</th><th>Ключ</th><th>Пользователь</th><th>Токенов</th><th>Лимит</th><th>Активен</th></tr>
+        </thead>
+        <tbody>
+          {% for k in keys %}
+          <tr>
+            <td>{{ k.id }}</td>
+            <td><code class="small">{{ k.key[:20] }}...</code></td>
+            <td>{{ k.user_id }}</td>
+            <td>{{ "{:,}".format(k.tokens_used) }}</td>
+            <td>{{ "{:,}".format(k.tokens_limit) }}</td>
+            <td>{% if k.is_active %}<span class="badge badge-status status-success">Да</span>{% else %}<span class="badge badge-status status-error">Нет</span>{% endif %}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="6" class="text-muted text-center py-3">Нет.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

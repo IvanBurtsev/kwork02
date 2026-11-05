@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Документация API{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-8">
+    <h1>📖 Документация API</h1>
+    <p class="text-muted">Единый эндпоинт для работы с DeepSeek и OpenAI через ваш API-ключ.</p>
+
+    <div class="card mb-3">
+      <div class="card-header">🔗 Базовый URL</div>
+      <div class="card-body"><code class="fs-5">http://127.0.0.1:8000/v1/chat/completions</code></div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-header">📦 Формат запроса (JSON)</div>
+      <div class="card-body">
+<pre>{
+  "model": "deepseek-chat",
+  "messages": [
+    {"role": "user", "content": "Hello!"}
+  ],
+  "temperature": 0.7,
+  "max_tokens": 4096
+}</pre>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-header">🔐 Аутентификация</div>
+      <div class="card-body">
+        <p>Добавьте заголовок:</p>
+        <code>Authorization: Bearer sk-ваш-ключ</code>
+        <p class="mt-2">Ключ создаётся в <a href="/dashboard">панели управления</a>.</p>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-header">🧪 Тестовый запрос (curl)</div>
+      <div class="card-body">
+<pre>curl -X POST http://127.0.0.1:8000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-ваш-ключ" \
+  -d '{"model":"deepseek-chat","messages":[{"role":"user","content":"Привет!"}]}'</pre>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-header">🔄 Совместимость</div>
+      <div class="card-body">Совместим с <strong>OpenAI SDK</strong>, <strong>LangChain</strong>, <strong>LlamaIndex</strong>.</div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-header">📊 Модели и цены</div>
+      <div class="card-body">
+        <table class="table table-sm mb-0">
+          <thead><tr><th>Модель</th><th>Цена за 1M токенов</th></tr></thead>
+          <tbody>
+            <tr><td><code>deepseek-chat</code></td><td>$0.50</td></tr>
+            <tr><td><code>deepseek-reasoner</code></td><td>$1.50</td></tr>
+            <tr><td><code>gpt-4o-mini</code></td><td>$0.60</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f0f2f5; min-height: 100vh;
+}
+.navbar-brand { font-weight: 700; font-size: 1.3rem; letter-spacing: -0.02em; }
+.card { border: none; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04); }
+.card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06); }
+.card-header { background: transparent; border-bottom: 1px solid #f0f0f0; font-weight: 600; }
+.badge-status { font-size: 0.75rem; font-weight: 500; padding: 0.25rem 0.6rem; border-radius: 999px; }
+.status-success { background: #d1fae5; color: #065f46; }
+.status-error { background: #fee2e2; color: #991b1b; }
+.status-pending { background: #fef3c7; color: #92400e; }
+.form-control, .form-select { border-radius: 8px; border-color: #e5e7eb; padding: 0.625rem 0.875rem; }
+.form-control:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+.btn-primary { background: #6366f1; border: none; border-radius: 8px; padding: 0.5rem 1.25rem; font-weight: 500; }
+.btn-primary:hover { background: #4f46e5; }
+.table th { font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; color: #6b7280; border-top: none; }
+.table td { vertical-align: middle; }
+.table-hover tbody tr:hover { background: #f9fafb; }
+pre { background: #f8f9fa; border-radius: 8px; padding: 1rem; font-size: 0.85rem; overflow-x: auto; }
+footer { color: #9ca3af; font-size: 0.8rem; text-align: center; padding: 2rem 0; }
+h1 { font-size: 1.5rem; font-weight: 600; }
+.nav-link { color: #6b7280; font-weight: 500; border-radius: 8px; padding: 0.5rem 1rem; }
+.nav-link:hover, .nav-link.active { color: #6366f1; background: rgba(99,102,241,0.08); }
